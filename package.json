@@ -1,6 +1,6 @@
 {
   "name": "country-code-validator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A versatile library for validating global identification codes, starting with tax codes and expanding to include VAT codes and more.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

@@ -1,14 +1,12 @@
 import { Country } from "./CountryValidator/Country";
 import { getCountryFromString } from "./CountryValidator/Utils/stringToCountry";
+import { returnResult, validateCountryCodeInput } from "./CountryValidator/Utils/validateCountryCode";
 import { getCorrectValidatorForCountry } from "./CountryValidator/Utils/validatorFromCountry";
 import { ValidationResult } from "./CountryValidator/ValidationResult";
 
-export function vatCodeValidator(vatCode: string) : ValidationResult{
+export function vatCodeValidator(countryCode: string, vatCode: string) : ValidationResult{
     let result: ValidationResult;
-    result = validateInput(vatCode);
-    if(!result.isValid){
-        return returnResult(false, result.errorMessage);
-    }
+    validateInputs(countryCode, vatCode);
     var country = getCountryFromString(vatCode.substring(0, 2));
     const validator = getCorrectValidatorForCountry(country);
     if (!validator) {
@@ -18,21 +16,18 @@ export function vatCodeValidator(vatCode: string) : ValidationResult{
     return result;
 }
 
-function validateInput(vatCode: string): ValidationResult{
+function validateInputs(countryCode: string, taxCode: string){
     let result: ValidationResult;
-    result = validateVatCodeInput(vatCode);
+    result = validateCountryCodeInput(countryCode);
     if(!result.isValid){
         return returnResult(false, result.errorMessage);
     }
-    return returnResult(true);
+    result = validateVatCodeInput(taxCode);
+    if(!result.isValid){
+        return returnResult(false, result.errorMessage);
+    }
 }
 
-function returnResult(isValid: boolean, error?: string): ValidationResult {
-    return {
-        isValid: isValid,
-        errorMessage: error
-    };
-}
 function validateVatCodeInput(vatCode: string): ValidationResult{
     if(vatCode == null || vatCode.trim() === ''){
         return returnResult(false, 'Vat code is required!');

@@ -2,13 +2,11 @@ import { Country } from "./CountryValidator/Country";
 import { getCountryFromString } from "./CountryValidator/Utils/stringToCountry";
 import { ValidationResult } from "./CountryValidator/ValidationResult";
 import { getCorrectValidatorForCountry } from "./CountryValidator/Utils/validatorFromCountry";
+import { returnResult, validateCountryCodeInput } from "./CountryValidator/Utils/validateCountryCode";
 
-export function postalCodeValidator(postalCode: string) : ValidationResult{
+export function postalCodeValidator(countryCode: string, postalCode: string) : ValidationResult{
     let result: ValidationResult;
-    result = validateInput(postalCode);
-    if(!result.isValid){
-        return returnResult(false, result.errorMessage);
-    }
+    validateInputs(countryCode, postalCode);
     var country = getCountryFromString(postalCode.substring(0, 2));
     const validator = getCorrectValidatorForCountry(country);
     if (!validator) {
@@ -17,14 +15,18 @@ export function postalCodeValidator(postalCode: string) : ValidationResult{
     result = validator.validatePostalCode(postalCode);
     return result;
 }
-function validateInput(postalCode: string): ValidationResult{
+function validateInputs(countryCode: string, taxCode: string){
     let result: ValidationResult;
-    result = validatePostalCodeInput(postalCode);
+    result = validateCountryCodeInput(countryCode);
     if(!result.isValid){
         return returnResult(false, result.errorMessage);
     }
-    return returnResult(true);
+    result = validatePostalCodeInput(taxCode);
+    if(!result.isValid){
+        return returnResult(false, result.errorMessage);
+    }
 }
+
 function validatePostalCodeInput(postalCode: string): ValidationResult{
     if(postalCode == null || postalCode.trim() === ''){
         return returnResult(false, 'Postal code is required!');
@@ -42,10 +44,4 @@ function validatePostalCodeInput(postalCode: string): ValidationResult{
         return returnResult(false, 'The first 2 characters of the postal code do not correspond to a valid country code.');
     }
     return returnResult(true);
-}
-function returnResult(isValid: boolean, error?: string): ValidationResult {
-    return {
-        isValid: isValid,
-        errorMessage: error
-    };
 }

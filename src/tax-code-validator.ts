@@ -2,6 +2,7 @@ import { Country } from "./CountryValidator/Country";
 import { getCountryFromString } from "./CountryValidator/Utils/stringToCountry";
 import { ValidationResult } from "./CountryValidator/ValidationResult";
 import { getCorrectValidatorForCountry } from "./CountryValidator/Utils/validatorFromCountry";
+import { returnResult } from "./CountryValidator/Utils/validateCountryCode";
 
 export function taxCodeValidator(countryCode: string, taxCode: string) : ValidationResult{
     let result: ValidationResult;
@@ -37,13 +38,6 @@ function validateCountryCodeInput(countryCode: string) {
         return returnResult(false, 'Country code does not match any known country!');
     }
     return returnResult(true);
-}
-
-function returnResult(isValid: boolean, error?: string): ValidationResult {
-    return {
-        isValid: isValid,
-        errorMessage: error
-    };
 }
 
 function validateTaxCodeInput(taxCode: string): ValidationResult{

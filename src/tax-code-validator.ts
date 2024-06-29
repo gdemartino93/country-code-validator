@@ -1,4 +1,5 @@
 import { Country } from "./CountryValidator/Country";
+import { getCountryFromString } from "./CountryValidator/Utils/mappings";
 import { ValidationResult } from "./CountryValidator/ValidationResult";
 
 export function taxCodeValidator(countryCode: string, taxCode: string) : ValidationResult{
@@ -11,7 +12,7 @@ export function taxCodeValidator(countryCode: string, taxCode: string) : Validat
     if(!result.isValid){
         return returnResult(false, result.error);
     }
-    
+
     return returnResult(result.isValid, result.error);
     
 }
@@ -23,16 +24,12 @@ export function validateCountryCodeInput(countryCode: string) {
     if (countryCode.length !== 2) {
         return returnResult(false, 'Country code must be exactly 2 characters long!');
     }
-    const validCountryCodes = Object.keys(Country).filter(key => !isNaN(Number(key))); 
-    validCountryCodes.forEach(element => {
-        console.log('el',element)
-    });
-    if (!validCountryCodes.includes(countryCode)) {
+    const knownCountry = getCountryFromString(countryCode);
+    if (knownCountry == Country.XX){
         return returnResult(false, 'Country code does not match any known country!');
     }
     return returnResult(true);
 }
-
 
 export function returnResult(isValid: boolean, error?: string): ValidationResult {
     return {
@@ -45,8 +42,8 @@ export function validateInputTaxCode(taxCode: string): ValidationResult{
     if(taxCode == null || taxCode.trim() === ''){
         return returnResult(false, 'Tax code is required!');
     }
-    if(taxCode.length > 25){
-        return returnResult(false, 'Tax code too long!');
+    if(taxCode.length < 7 || taxCode.length > 25){
+        return returnResult(false, 'Invalid tax code length!');
     }
     return returnResult(true);
 }

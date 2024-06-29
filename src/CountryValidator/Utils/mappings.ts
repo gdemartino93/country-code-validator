@@ -1,6 +1,6 @@
 import { Country } from "../Country";
 
-export function getCountryFromString(countryCode: string): Country | undefined {
+export function getCountryFromString(countryCode: string): Country {
     const normalizedCode = countryCode.trim().toLowerCase();
     
     switch (normalizedCode) {

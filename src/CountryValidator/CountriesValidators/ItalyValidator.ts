@@ -2,6 +2,11 @@ import { CountryValidator } from '../CodeValidation';
 import { ValidationResult } from '../ValidationResult';
 import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
 export class ItalyValidator implements CountryValidator {
+
+    // Fiscal code example: RSSMRA80A01H501S
+    // VAT number example: 11861041009
+    // Postal code example: 00042
+
     COUNTRY_CODE: string = 'IT';
 
     private static readonly OmocodeChars = "LMNPQRSTUV";

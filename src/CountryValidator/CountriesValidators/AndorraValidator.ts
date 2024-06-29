@@ -4,8 +4,8 @@ import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
 
 export class AndorraValidator implements CountryValidator {
     
-    // NRT is the Andorran VAT number and Andorran National Identity Number
-
+    // NRT is the Andorran VAT number and Andorran National Identity Number example: F123456Z
+    // postal code example: AD100
     COUNTRY_CODE: string = 'AD';
 
     private static readonly INVALID_FORMAT_REGEX = /^[ACDEFGLOPU]/;

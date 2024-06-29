@@ -10,15 +10,11 @@ export function vatCodeValidator(vatCode: string) : ValidationResult{
         return returnResult(false, result.errorMessage);
     }
     var country = getCountryFromString(vatCode.substring(0, 2));
-    console.log('country name is: ' + Country[country as unknown as keyof typeof Country] + ' Country value: ' + country);
-
     const validator = getCorrectValidatorForCountry(country);
     if (!validator) {
         return returnResult(false, 'No validator available for this country!');
     }
-    console.log('validator used is: ', validator.constructor.name);
     result = validator.validateVatCode(vatCode);
-    console.log('final result is: ', result);
     return result;
 }
 

@@ -10,13 +10,11 @@ export function postalCodeValidator(postalCode: string) : ValidationResult{
         return returnResult(false, result.errorMessage);
     }
     var country = getCountryFromString(postalCode.substring(0, 2));
-    console.log('country name is: ' + Country[country as unknown as keyof typeof Country] + ' Country value: ' + country);
     const validator = getCorrectValidatorForCountry(country);
     if (!validator) {
         return returnResult(false, 'No validator available for this country!');
     }
     result = validator.validatePostalCode(postalCode);
-    console.log('final result is: ', result);
     return result;
 }
 function validateInput(postalCode: string): ValidationResult{

@@ -7,13 +7,10 @@ export function taxCodeValidator(countryCode: string, taxCode: string) : Validat
     let result: ValidationResult;
     validateInputs(countryCode, taxCode);
     var country = getCountryFromString(countryCode);
-    console.log('country name is: ', Country[country as unknown as keyof typeof Country]);
-    console.log('country value is: ', country);
     const validator = getCorrectValidatorForCountry(country);
     if (!validator) {
         return returnResult(false, 'No validator available for this country!');
     }
-    console.log('validator used is: ', validator.constructor.name);
     result = validator.validateIndividualTaxCode(taxCode);
     return result;
 }

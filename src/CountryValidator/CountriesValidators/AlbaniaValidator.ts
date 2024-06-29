@@ -4,8 +4,9 @@ import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
 
 export class AlbaniaValidator implements CountryValidator {
     
-    // NIPT is the Albanian VAT number
-    // NID is the Albanian National Identity Number
+    // NIPT is the Albanian VAT number example: J12345678N
+    // NID is the Albanian National Identity Number (ssn) example: A12345678A
+    // postal code example: 1001
 
     COUNTRY_CODE: string = 'AL';
     private static readonly NID_REGEX = /^[A-O]\d(0[1-9]|1[0-2]|5[1-9]|6[0-2])(0?[1-9]|[1-3][0-9]|4[0-2])\d{3}\w$/;

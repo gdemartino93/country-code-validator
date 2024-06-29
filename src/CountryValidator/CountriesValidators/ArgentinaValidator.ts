@@ -4,9 +4,9 @@ import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
 
 export class ArgentinaValidator implements CountryValidator{
     
-    // CUIT is the Argentine vat code
-    // DNI is the Argentine National Identity Number (ssn)
-
+    // CUIT is the Argentine vat code example: 20345678906
+    // DNI is the Argentine National Identity Number (ssn) example: 12345678
+    // Postal code example: 1001 or A1001AAA
 
     COUNTRY_CODE: string = 'AR';
     private readonly CUIT_REGEX = /^\d{11}$/;
@@ -43,7 +43,7 @@ export class ArgentinaValidator implements CountryValidator{
 
     private validateCuit(cuit: string): ValidationResult {
         cuit = removeSpecialCharacters(cuit);
-
+        cuit = cuit.replace(this.COUNTRY_CODE, '');
         if (!this.CUIT_REGEX.test(cuit)) {
             return ValidationResult.InvalidFormat('12345678901');
         }

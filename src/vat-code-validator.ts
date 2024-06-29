@@ -7,7 +7,7 @@ import { ValidationResult } from "./CountryValidator/ValidationResult";
 export function vatCodeValidator(countryCode: string, vatCode: string) : ValidationResult{
     let result: ValidationResult;
     validateInputs(countryCode, vatCode);
-    var country = getCountryFromString(vatCode.substring(0, 2));
+    var country = getCountryFromString(countryCode);
     const validator = getCorrectValidatorForCountry(country);
     if (!validator) {
         return returnResult(false, 'No validator available for this country!');

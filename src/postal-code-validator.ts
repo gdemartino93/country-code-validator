@@ -7,7 +7,7 @@ import { returnResult, validateCountryCodeInput } from "./CountryValidator/Utils
 export function postalCodeValidator(countryCode: string, postalCode: string) : ValidationResult{
     let result: ValidationResult;
     validateInputs(countryCode, postalCode);
-    var country = getCountryFromString(postalCode.substring(0, 2));
+    var country = getCountryFromString(countryCode);
     const validator = getCorrectValidatorForCountry(country);
     if (!validator) {
         return returnResult(false, 'No validator available for this country!');

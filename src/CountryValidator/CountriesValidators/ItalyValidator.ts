@@ -23,7 +23,7 @@ export class ItalyValidator implements CountryValidator {
         if (!ItalyValidator.CheckRegex.test(ssn)) {
             const nonOmocodeFC = this.replaceOmocodeChars(ssn);
             if (!ItalyValidator.CheckRegex.test(nonOmocodeFC)) {
-                return ValidationResult.Invalid("Invalid format");
+                return ValidationResult.InvalidFormat("12345678901");
             }
         }
         const isValid = ssn[15] === this.getControlChar(ssn.substring(0, 15));

@@ -17,7 +17,7 @@ export function vatCodeValidator(vatCode: string) : ValidationResult{
         return returnResult(false, 'No validator available for this country!');
     }
     console.log('validator used is: ', validator.constructor.name);
-    result = validator.validateVatCode(vatCode.substring(2));
+    result = validator.validateVatCode(vatCode);
     console.log('final result is: ', result);
     return result;
 }

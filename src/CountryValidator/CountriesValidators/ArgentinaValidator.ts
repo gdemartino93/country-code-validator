@@ -43,7 +43,6 @@ export class ArgentinaValidator implements CountryValidator{
 
     private validateCuit(cuit: string): ValidationResult {
         cuit = removeSpecialCharacters(cuit);
-        cuit = cuit.replace(this.COUNTRY_CODE, '');
         if (!this.CUIT_REGEX.test(cuit)) {
             return ValidationResult.InvalidFormat('12345678901');
         }

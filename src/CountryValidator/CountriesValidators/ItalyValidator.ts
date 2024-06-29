@@ -75,7 +75,6 @@ export class ItalyValidator implements CountryValidator {
 
     public validateVatCode(vat: string): ValidationResult {
         vat = removeSpecialCharacters(vat);
-        vat = vat.replace(this.COUNTRY_CODE, '');
 
         if (!/^\d{11}$/.test(vat)) {
             return ValidationResult.InvalidFormat("12345678901");

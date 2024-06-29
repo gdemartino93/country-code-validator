@@ -11,7 +11,6 @@ export class ArmeniaValidator implements CountryValidator{
 
     validateIndividualTaxCode(ssn: string): ValidationResult {
         ssn = removeSpecialCharacters(ssn);
-        ssn = ssn.replace(this.COUNTRY_CODE, '');
         if (!/^\d{8}$/.test(ssn)) {
             return ValidationResult.InvalidFormat('12345678');
         }
@@ -22,7 +21,6 @@ export class ArmeniaValidator implements CountryValidator{
     }
     validatePostalCode(postalCode: string): ValidationResult {
         postalCode = removeSpecialCharacters(postalCode);
-        postalCode = postalCode.replace(this.COUNTRY_CODE, '');
 
         if (!/^\d{4}$/.test(postalCode)) {
             return ValidationResult.InvalidFormat('NNNN');

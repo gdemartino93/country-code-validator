@@ -12,7 +12,7 @@ export class AndorraValidator implements CountryValidator {
     private static readonly POSTAL_CODE_REGEX = /^[Aa][Dd]\d{3}$/;
 
     public validateIndividualTaxCode(id: string): ValidationResult {
-        id = removeSpecialCharacters(id).replace(this.COUNTRY_CODE, '');
+        id = removeSpecialCharacters(id);
 
         if (id.length !== 8) {
             return ValidationResult.InvalidLength();

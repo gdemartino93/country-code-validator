@@ -1,6 +1,7 @@
 import { Country } from "./CountryValidator/Country";
-import { getCountryFromString } from "./CountryValidator/Utils/mappings";
+import { getCountryFromString } from "./CountryValidator/Utils/stringToCountry";
 import { ValidationResult } from "./CountryValidator/ValidationResult";
+import { getCorrectValidatorForCountry } from "./CountryValidator/Utils/validatorFromCountry";
 
 export function taxCodeValidator(countryCode: string, taxCode: string) : ValidationResult{
     let result: ValidationResult;
@@ -12,12 +13,18 @@ export function taxCodeValidator(countryCode: string, taxCode: string) : Validat
     if(!result.isValid){
         return returnResult(false, result.error);
     }
-
-    return returnResult(result.isValid, result.error);
-    
+    var country = getCountryFromString(countryCode);
+    console.log('country is: ', country);
+    const validator = getCorrectValidatorForCountry(country);
+    if (!validator) {
+        return returnResult(false, 'No validator available for this country!');
+    }
+    console.log('validator used is: ', validator.constructor.name);
+    result = validator.validateIndividualTaxCode(taxCode);
+    return returnResult(result.isValid, result.error);   
 }
 
-export function validateCountryCodeInput(countryCode: string) {
+function validateCountryCodeInput(countryCode: string) {
     if (!countryCode || countryCode.trim() === '') {
         return returnResult(false, 'Country code is required!');
     }
@@ -31,14 +38,14 @@ export function validateCountryCodeInput(countryCode: string) {
     return returnResult(true);
 }
 
-export function returnResult(isValid: boolean, error?: string): ValidationResult {
+function returnResult(isValid: boolean, error?: string): ValidationResult {
     return {
         isValid: isValid,
         error: error
     };
 }
 
-export function validateInputTaxCode(taxCode: string): ValidationResult{
+function validateInputTaxCode(taxCode: string): ValidationResult{
     if(taxCode == null || taxCode.trim() === ''){
         return returnResult(false, 'Tax code is required!');
     }

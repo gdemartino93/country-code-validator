@@ -1,6 +1,8 @@
+import { CountryValidator } from '../CodeValidation';
 import { ValidationResult } from '../ValidationResult';
 import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
-export class ItalyValidator {
+export class ItalyValidator implements CountryValidator {
+
     private static readonly Months = "ABCDEHLMPRST";
     private static readonly Vocals = "AEIOU";
     private static readonly Consonants = "BCDFGHJKLMNPQRSTVWXYZ";
@@ -70,7 +72,7 @@ export class ItalyValidator {
         return s;
     }
 
-    public validateVAT(vat: string): ValidationResult {
+    public validateVatCode(vat: string): ValidationResult {
         vat = removeSpecialCharacters(vat);
         vat = vat.replace(ItalyValidator.COUNTRY_CODE, '');
 

@@ -13,6 +13,9 @@
 - Support for mapping and handling standard country codes
 - Returns validation result objects with error details
 
+## Validation provided by:
+https://github.com/anghelvalentin/CountryValidator
+
 ## Installation
 
 You can install the library via npm:

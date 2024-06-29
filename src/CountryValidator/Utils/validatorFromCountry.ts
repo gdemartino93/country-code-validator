@@ -3,6 +3,7 @@ import { AlbaniaValidator } from "../CountriesValidators/AlbaniaValidator";
 import { AndorraValidator } from "../CountriesValidators/AndorraValidator";
 import { ArgentinaValidator } from "../CountriesValidators/ArgentinaValidator";
 import { ArmeniaValidator } from "../CountriesValidators/ArmeniaValidator";
+import { AustraliaValidator } from "../CountriesValidators/AustraliaValidator";
 import { ItalyValidator } from "../CountriesValidators/ItalyValidator";
 import { Country } from "../Country";
 
@@ -13,6 +14,7 @@ const validators: { [key in keyof typeof Country]?: CountryValidator } = {
     [Country.AD]: new AndorraValidator(),
     [Country.AR]: new ArgentinaValidator(),
     [Country.AM]: new ArmeniaValidator(),
+    [Country.AU]: new AustraliaValidator(),
     [Country.IT]: new ItalyValidator(),
     
     // ong add other validators

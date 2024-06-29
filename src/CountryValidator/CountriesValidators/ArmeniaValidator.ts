@@ -4,8 +4,8 @@ import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
 
 export class ArmeniaValidator implements CountryValidator{
 
-    // Individual tax code example: 12345678
-    // VAT number example: 12345678
+    // Individual tax code example: 02524634
+    // VAT number example: 02524634
     // Postal code example: 0010
     COUNTRY_CODE: string = 'AM';
 

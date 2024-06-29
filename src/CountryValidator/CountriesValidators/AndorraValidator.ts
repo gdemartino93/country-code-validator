@@ -3,13 +3,14 @@ import { ValidationResult } from '../ValidationResult';
 import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
 
 export class AndorraValidator implements CountryValidator {
+    
+    COUNTRY_CODE: string = 'AD';
 
-    private static readonly VALID_START_LETTERS = 'ACDEFGLOPU';
     private static readonly INVALID_FORMAT_REGEX = /^[ACDEFGLOPU]/;
     private static readonly POSTAL_CODE_REGEX = /^[Aa][Dd]\d{3}$/;
 
     public validateIndividualTaxCode(id: string): ValidationResult {
-        id = removeSpecialCharacters(id).replace(/^AD/i, '');
+        id = removeSpecialCharacters(id).replace(this.COUNTRY_CODE, '');
 
         if (id.length !== 8) {
             return ValidationResult.InvalidLength();
@@ -34,8 +35,9 @@ export class AndorraValidator implements CountryValidator {
         return this.validateIndividualTaxCode(vatCode);
     }
 
-    public static validatePostalCode(postalCode: string): ValidationResult {
+    public validatePostalCode(postalCode: string): ValidationResult {
         postalCode = removeSpecialCharacters(postalCode);
+        postalCode = postalCode.replace(this.COUNTRY_CODE, '').toUpperCase();
         if (!AndorraValidator.POSTAL_CODE_REGEX.test(postalCode)) {
             return ValidationResult.InvalidFormat('CCNNN');
         }

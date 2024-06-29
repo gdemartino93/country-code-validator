@@ -2,15 +2,11 @@ import { CountryValidator } from '../CodeValidation';
 import { ValidationResult } from '../ValidationResult';
 import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
 export class ItalyValidator implements CountryValidator {
+    COUNTRY_CODE: string = 'IT';
 
-    private static readonly Months = "ABCDEHLMPRST";
-    private static readonly Vocals = "AEIOU";
-    private static readonly Consonants = "BCDFGHJKLMNPQRSTVWXYZ";
     private static readonly OmocodeChars = "LMNPQRSTUV";
     private static readonly ControlCodeArray = [1, 0, 5, 7, 9, 13, 15, 17, 19, 21, 2, 4, 18, 20, 11, 3, 6, 8, 12, 14, 16, 10, 22, 25, 24, 23];
     private static readonly CheckRegex = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/;
-
-    private static readonly COUNTRY_CODE = 'IT';
 
     public validateIndividualTaxCode(ssn: string): ValidationResult {
         ssn = removeSpecialCharacters(ssn);
@@ -74,7 +70,7 @@ export class ItalyValidator implements CountryValidator {
 
     public validateVatCode(vat: string): ValidationResult {
         vat = removeSpecialCharacters(vat);
-        vat = vat.replace(ItalyValidator.COUNTRY_CODE, '');
+        vat = vat.replace(this.COUNTRY_CODE, '');
 
         if (!/^\d{11}$/.test(vat)) {
             return ValidationResult.InvalidFormat("12345678901");
@@ -104,8 +100,9 @@ export class ItalyValidator implements CountryValidator {
 
     public validatePostalCode(postalCode: string): ValidationResult {
         postalCode = removeSpecialCharacters(postalCode);
+        postalCode = postalCode.replace(this.COUNTRY_CODE, '').toUpperCase();
         if (!/^\d{5}$/.test(postalCode)) {
-            return ValidationResult.InvalidFormat("NNNNN");
+            return ValidationResult.InvalidFormat("11111");
         }
         return ValidationResult.Success();
     }

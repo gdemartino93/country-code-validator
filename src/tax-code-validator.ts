@@ -5,34 +5,38 @@ import { getCorrectValidatorForCountry } from "./CountryValidator/Utils/validato
 
 export function taxCodeValidator(countryCode: string, taxCode: string) : ValidationResult{
     let result: ValidationResult;
-    result = validateCountryCodeInput(countryCode);
-    if(!result.isValid){
-        return returnResult(false, result.error);
-    }
-    result = validateInputTaxCode(taxCode);
-    if(!result.isValid){
-        return returnResult(false, result.error);
-    }
+    validateInputs(countryCode, taxCode);
     var country = getCountryFromString(countryCode);
-    console.log('country is: ', country);
+    console.log('country name is: ', Country[country as unknown as keyof typeof Country]);
+    console.log('country value is: ', country);
     const validator = getCorrectValidatorForCountry(country);
     if (!validator) {
         return returnResult(false, 'No validator available for this country!');
     }
     console.log('validator used is: ', validator.constructor.name);
     result = validator.validateIndividualTaxCode(taxCode);
-    return returnResult(result.isValid, result.error);   
+    return result;
 }
-
+function validateInputs(countryCode: string, taxCode: string){
+    let result: ValidationResult;
+    result = validateCountryCodeInput(countryCode);
+    if(!result.isValid){
+        return returnResult(false, result.errorMessage);
+    }
+    result = validateTaxCodeInput(taxCode);
+    if(!result.isValid){
+        return returnResult(false, result.errorMessage);
+    }
+}
 function validateCountryCodeInput(countryCode: string) {
-    if (!countryCode || countryCode.trim() === '') {
+    if(!countryCode || countryCode.trim() === '') {
         return returnResult(false, 'Country code is required!');
     }
-    if (countryCode.length !== 2) {
+    if(countryCode.length !== 2) {
         return returnResult(false, 'Country code must be exactly 2 characters long!');
     }
     const knownCountry = getCountryFromString(countryCode);
-    if (knownCountry == Country.XX){
+    if(knownCountry == Country.XX){
         return returnResult(false, 'Country code does not match any known country!');
     }
     return returnResult(true);
@@ -41,11 +45,11 @@ function validateCountryCodeInput(countryCode: string) {
 function returnResult(isValid: boolean, error?: string): ValidationResult {
     return {
         isValid: isValid,
-        error: error
+        errorMessage: error
     };
 }
 
-function validateInputTaxCode(taxCode: string): ValidationResult{
+function validateTaxCodeInput(taxCode: string): ValidationResult{
     if(taxCode == null || taxCode.trim() === ''){
         return returnResult(false, 'Tax code is required!');
     }

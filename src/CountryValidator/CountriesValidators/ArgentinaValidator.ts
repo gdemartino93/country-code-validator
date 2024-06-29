@@ -4,21 +4,26 @@ import { removeSpecialCharacters } from './../Utils/removeSpecialCharacters';
 
 export class ArgentinaValidator implements CountryValidator{
     
+    // CUIT is the Argentine vat code
+    // DNI is the Argentine National Identity Number (ssn)
+
+
     COUNTRY_CODE: string = 'AR';
     private readonly CUIT_REGEX = /^\d{11}$/;
     private readonly DNI_REGEX = /^\d{8}$/;
     private readonly CBU_REGEX = /^[0-9]{22}$/;
     private readonly POSTAL_CODE_REGEX = /^\d{4}|[A-Za-z]\d{4}[a-zA-Z]{3}$/;
-    public validateIndividualTaxCode(cuit: string): ValidationResult {
+
+    public validateIndividualTaxCode(dni: string): ValidationResult {
+        return this.validateNationalIdentity(dni);
+    }
+
+    public validateVatCode(cuit: string): ValidationResult {
         return this.validateCuit(cuit);
     }
 
     public validateEntity(id: string): ValidationResult {
         return this.validateCuit(id);
-    }
-
-    public validateVatCode(vatId: string): ValidationResult {
-        return this.validateCuit(vatId);
     }
 
     public validateNationalIdentity(dni: string): ValidationResult {

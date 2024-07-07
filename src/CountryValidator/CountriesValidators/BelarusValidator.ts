@@ -5,6 +5,15 @@ import { ValidationResult } from "../ValidationResult";
 
 export class BelarusValidator implements CountryValidator{
 
+    // Passport Number (PN)
+    // For Individuals
+    // The Belarusian Passport Number is 9 characters and is often used in lieu of a tax ID number on international tax forms.
+
+    // UNP Number (UNP)
+    // For Individuals, Entities, VAT, Example: 623456785
+    // The UNP Number is 9 digits in the format NNNNNNNNN where the last digit is a check digit. It also contains a regional identifier. It is issued to organizations and individuals for tax purposes. Belarus is not an EU member state and therefore their VAT numbers are not available for lookup in the VIES database.
+
+    // postal code example: 222820
     COUNTRY_CODE: string = 'BY';
     
     validateIndividualTaxCode(id: string): ValidationResult {
@@ -21,7 +30,11 @@ export class BelarusValidator implements CountryValidator{
         vatId = vatId?.replace("УНП", '').replace("UNP", '');
         vatId = translit(vatId);
         vatId = removeSpecialCharacters(vatId);
-        if (!/^[AaBbCcEeHhKkMmOoPpTt]{2}/.test(vatId)) {
+        
+        // if (!/^[AaBbCcEeHhKkMmOoPpTt]{2}/.test(vatId)) {
+        //     return ValidationResult.Invalid("Invalid format");
+        // }
+        if (!/^\d{2}/.test(vatId)) {
             return ValidationResult.Invalid("Invalid format");
         }
         return this.validateUNP(vatId);
@@ -30,7 +43,7 @@ export class BelarusValidator implements CountryValidator{
     validatePostalCode(postalCode: string): ValidationResult {
         postalCode = removeSpecialCharacters(postalCode);
         if (!/^\d{6}$/.test(postalCode)) {
-            return ValidationResult.InvalidFormat("NNNNNN");
+            return ValidationResult.InvalidFormat("222820");
         }
         return ValidationResult.Success();
     }

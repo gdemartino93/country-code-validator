@@ -10,6 +10,8 @@ import { BahrainValidator } from "../CountriesValidators/BahrainValidator";
 import { BelarusValidator } from "../CountriesValidators/BelarusValidator";
 import { BelgiumValidator } from "../CountriesValidators/BelgiumValidator";
 import { BoliviaValidator } from "../CountriesValidators/BoliviaValidator";
+import { BosniaValidator } from "../CountriesValidators/BosniaValidator";
+import { BrazilValidator } from "../CountriesValidators/BrazilValidator";
 import { ItalyValidator } from "../CountriesValidators/ItalyValidator";
 import { Country } from "../Country";
 
@@ -27,6 +29,8 @@ const validators: { [key in keyof typeof Country]?: CountryValidator } = {
     [Country.BY]: new BelarusValidator(),
     [Country.BE]: new BelgiumValidator(),
     [Country.BO]: new BoliviaValidator(),
+    [Country.BA]: new BosniaValidator(),
+    [Country.BR]: new BrazilValidator(),
     [Country.IT]: new ItalyValidator(),
     
     // ong add other validators
